@@ -70,8 +70,8 @@ class Explorer extends Component {
             alert("File Opened");
             return;
         }
-        const breadcrumbs = this.state.breadcrumbs;
-        breadcrumbs.push(folder);
+        const breadcrumbs = this.getBreadcrumbs(folder);
+        // breadcrumbs.push(folder.folderId);
 
         this.setState({currFolder : folder.folderId , breadcrumbs}); 
     }
@@ -174,6 +174,20 @@ class Explorer extends Component {
         // this.setState({tree : divs})
        return divs;
 
+    }
+
+    getBreadcrumbs(folder)
+    {
+        const br = [];
+        br.unshift(folder);
+        const folders = this.state.folders;
+        while(folder.parent != null)
+        {
+            folder = folders.get(folder.parent);
+            br.unshift(folder);
+        }
+        return br;
+        
     }
     
 
